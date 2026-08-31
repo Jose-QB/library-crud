@@ -19,7 +19,7 @@ import {
   AuthorRequest,
 } from "../../api/authorService";
 
-import { Author } from "../models/Author";
+import { Author } from "../../models/Author";
 
 export default function AuthorFormPage() {
   const navigate = useNavigate();
