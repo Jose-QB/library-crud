@@ -7,8 +7,6 @@ import Home from "../pages/Home";
 import CreateBook from "../pages/CreateBook";
 import EditBook from "../pages/EditBook";
 import BookDetail from "../pages/BookDetail";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
 
 import Authors from "../pages/catalog/Authors";
 import AuthorFormPage from "../pages/catalog/AuthorFormPage";
@@ -19,19 +17,18 @@ import GenreFormPage from "../pages/catalog/GenreFormPage";
 import Publishers from "../pages/catalog/Publishers";
 import PublisherFormPage from "../pages/catalog/PublisherFormPage";
 
-import ProtectedRoute from "../auth/ProtectedRoute";
-
 export default function AppRouter() {
   return (
     <Routes>
-
-      {/* ==================================================
-          PUBLIC
-          ================================================== */}
-
+      {/* Books */}
       <Route
         path="/"
         element={<Home />}
+      />
+
+      <Route
+        path="/books/new"
+        element={<CreateBook />}
       />
 
       <Route
@@ -40,90 +37,57 @@ export default function AppRouter() {
       />
 
       <Route
-        path="/login"
-        element={<Login />}
+        path="/books/edit/:id"
+        element={<EditBook />}
+      />
+
+      {/* Authors */}
+      <Route
+        path="/authors"
+        element={<Authors />}
       />
 
       <Route
-        path="/register"
-        element={<Register />}
+        path="/authors/new"
+        element={<AuthorFormPage />}
       />
 
+      <Route
+        path="/authors/edit/:id"
+        element={<AuthorFormPage />}
+      />
 
-      {/* ==================================================
-          AUTHENTICATED - USER + ADMIN
-          ================================================== */}
+      {/* Genres */}
+      <Route
+        path="/genres"
+        element={<Genres />}
+      />
 
-      <Route element={<ProtectedRoute />}>
+      <Route
+        path="/genres/new"
+        element={<GenreFormPage />}
+      />
 
-        {/* ---------- Books ---------- */}
+      <Route
+        path="/genres/edit/:id"
+        element={<GenreFormPage />}
+      />
 
-        <Route
-          path="/books/new"
-          element={<CreateBook />}
-        />
+      {/* Publishers */}
+      <Route
+        path="/publishers"
+        element={<Publishers />}
+      />
 
-        <Route
-          path="/books/edit/:id"
-          element={<EditBook />}
-        />
+      <Route
+        path="/publishers/new"
+        element={<PublisherFormPage />}
+      />
 
-
-        {/* ---------- Authors ---------- */}
-
-        <Route
-          path="/authors"
-          element={<Authors />}
-        />
-
-        <Route
-          path="/authors/new"
-          element={<AuthorFormPage />}
-        />
-
-        <Route
-          path="/authors/edit/:id"
-          element={<AuthorFormPage />}
-        />
-
-
-        {/* ---------- Genres ---------- */}
-
-        <Route
-          path="/genres"
-          element={<Genres />}
-        />
-
-        <Route
-          path="/genres/new"
-          element={<GenreFormPage />}
-        />
-
-        <Route
-          path="/genres/edit/:id"
-          element={<GenreFormPage />}
-        />
-
-
-        {/* ---------- Publishers ---------- */}
-
-        <Route
-          path="/publishers"
-          element={<Publishers />}
-        />
-
-        <Route
-          path="/publishers/new"
-          element={<PublisherFormPage />}
-        />
-
-        <Route
-          path="/publishers/edit/:id"
-          element={<PublisherFormPage />}
-        />
-
-      </Route>
-
+      <Route
+        path="/publishers/edit/:id"
+        element={<PublisherFormPage />}
+      />
     </Routes>
   );
 }

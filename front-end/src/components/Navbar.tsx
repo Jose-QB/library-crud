@@ -13,22 +13,8 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import { useAuth } from "../auth/AuthContext";
-
 export default function Navbar() {
   const navigate = useNavigate();
-
-  const {
-    isAuthenticated,
-    username,
-    role,
-    logout,
-  } = useAuth();
-
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
 
   return (
     <AppBar position="static">
@@ -58,7 +44,6 @@ export default function Navbar() {
           alignItems="center"
           gap={1}
         >
-          {/* PUBLIC */}
           <Button
             color="inherit"
             component={RouterLink}
@@ -67,89 +52,30 @@ export default function Navbar() {
             Books
           </Button>
 
-          {/* AUTHENTICATED */}
-          {isAuthenticated && (
-            <>
-              <Button
-                color="inherit"
-                component={RouterLink}
-                to="/authors"
-              >
-                Authors
-              </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/authors"
+          >
+            Authors
+          </Button>
 
-              <Button
-                color="inherit"
-                component={RouterLink}
-                to="/genres"
-              >
-                Genres
-              </Button>
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/genres"
+          >
+            Genres
+          </Button>
 
-              <Button
-                color="inherit"
-                component={RouterLink}
-                to="/publishers"
-              >
-                Publishers
-              </Button>
-            </>
-          )}
+          <Button
+            color="inherit"
+            component={RouterLink}
+            to="/publishers"
+          >
+            Publishers
+          </Button>
         </Box>
-
-        {/* AUTHENTICATION */}
-        {!isAuthenticated ? (
-          <Box
-            display="flex"
-            gap={1}
-            ml={2}
-          >
-            <Button
-              color="inherit"
-              component={RouterLink}
-              to="/login"
-            >
-              Login
-            </Button>
-
-            <Button
-              color="inherit"
-              component={RouterLink}
-              to="/register"
-            >
-              Register
-            </Button>
-          </Box>
-        ) : (
-          <Box
-            display="flex"
-            alignItems="center"
-            gap={2}
-            ml={2}
-          >
-            <Box textAlign="right">
-              <Typography variant="body2">
-                {username}
-              </Typography>
-
-              <Typography
-                variant="caption"
-                sx={{
-                  opacity: 0.8,
-                }}
-              >
-                {role}
-              </Typography>
-            </Box>
-
-            <Button
-              color="inherit"
-              onClick={handleLogout}
-            >
-              Logout
-            </Button>
-          </Box>
-        )}
       </Toolbar>
     </AppBar>
   );

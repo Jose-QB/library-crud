@@ -9,26 +9,20 @@ import {
 import Navbar from "./components/Navbar";
 import AppRouter from "./routes/AppRouter";
 
-import {
-  AuthProvider,
-} from "./auth/AuthContext";
-
 function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Navbar />
+      <Navbar />
 
-        <Container
-          maxWidth="lg"
-          sx={{
-            mt: 4,
-            mb: 4,
-          }}
-        >
-          <AppRouter />
-        </Container>
-      </AuthProvider>
+      <Container
+        maxWidth="lg"
+        sx={{
+          mt: 4,
+          mb: 4,
+        }}
+      >
+        <AppRouter />
+      </Container>
     </BrowserRouter>
   );
 }
