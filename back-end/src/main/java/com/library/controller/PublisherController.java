@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,8 +27,7 @@ public class PublisherController {
 
     @Operation(
             summary = "Create a publisher",
-            description = "Creates a new publisher. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Creates a new publisher."
     )
     @ApiResponses({
             @ApiResponse(
@@ -39,20 +37,6 @@ public class PublisherController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to create publishers",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -123,8 +107,7 @@ public class PublisherController {
 
     @Operation(
             summary = "Update a publisher",
-            description = "Updates an existing publisher. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Updates an existing publisher."
     )
     @ApiResponses({
             @ApiResponse(
@@ -134,20 +117,6 @@ public class PublisherController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to update publishers",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -179,27 +148,12 @@ public class PublisherController {
 
     @Operation(
             summary = "Delete a publisher",
-            description = "Deletes a publisher. Requires a valid JWT and ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Deletes a publisher."
     )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "204",
                     description = "Publisher deleted successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "ADMIN role required",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
             ),
             @ApiResponse(
                     responseCode = "404",

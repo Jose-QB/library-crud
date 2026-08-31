@@ -11,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -29,8 +28,7 @@ public class BookController {
 
     @Operation(
             summary = "Create a book",
-            description = "Creates a new book. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Creates a new book."
     )
     @ApiResponses({
             @ApiResponse(
@@ -40,20 +38,6 @@ public class BookController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to create books",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -141,8 +125,7 @@ public class BookController {
 
     @Operation(
             summary = "Update a book",
-            description = "Updates an existing book. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Updates an existing book."
     )
     @ApiResponses({
             @ApiResponse(
@@ -152,20 +135,6 @@ public class BookController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to update books",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -197,27 +166,12 @@ public class BookController {
 
     @Operation(
             summary = "Delete a book",
-            description = "Deletes a book. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Deletes a book."
     )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "204",
                     description = "Book deleted successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to delete books",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
             ),
             @ApiResponse(
                     responseCode = "404",

@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,8 +27,7 @@ public class GenreController {
 
     @Operation(
             summary = "Create a genre",
-            description = "Creates a new genre. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Creates a new genre."
     )
     @ApiResponses({
             @ApiResponse(
@@ -39,20 +37,6 @@ public class GenreController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to create genres",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -122,8 +106,7 @@ public class GenreController {
 
     @Operation(
             summary = "Update a genre",
-            description = "Updates an existing genre. Requires a valid JWT and USER or ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Updates an existing genre."
     )
     @ApiResponses({
             @ApiResponse(
@@ -133,20 +116,6 @@ public class GenreController {
             @ApiResponse(
                     responseCode = "400",
                     description = "Invalid request",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "User does not have permission to update genres",
                     content = @Content(
                             schema = @Schema(implementation = ApiErrorResponse.class)
                     )
@@ -178,27 +147,12 @@ public class GenreController {
 
     @Operation(
             summary = "Delete a genre",
-            description = "Deletes a genre. Requires a valid JWT and ADMIN role.",
-            security = @SecurityRequirement(name = "bearerAuth")
+            description = "Deletes a genre."
     )
     @ApiResponses({
             @ApiResponse(
                     responseCode = "204",
                     description = "Genre deleted successfully"
-            ),
-            @ApiResponse(
-                    responseCode = "401",
-                    description = "Authentication required or JWT is invalid",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
-            ),
-            @ApiResponse(
-                    responseCode = "403",
-                    description = "ADMIN role required",
-                    content = @Content(
-                            schema = @Schema(implementation = ApiErrorResponse.class)
-                    )
             ),
             @ApiResponse(
                     responseCode = "404",
