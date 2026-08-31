@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: library
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/library
+    username: library_user
+    password: pass1234
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    schemas: library
+    default-schema: library
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+
+jwt:
+  secret: my-super-secret-key-for-library-project-2026-256
+  expiration: 86400000
