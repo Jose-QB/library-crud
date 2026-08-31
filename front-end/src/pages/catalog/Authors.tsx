@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   Alert,
   Box,
@@ -30,14 +31,8 @@ import {
 
 import { Author } from "../../models/Author";
 
-import { useAuth } from "../../auth/AuthContext";
-
 export default function Authors() {
   const navigate = useNavigate();
-
-  const { role } = useAuth();
-
-  const isAdmin = role === "ADMIN";
 
   const [authors, setAuthors] =
     useState<Author[]>([]);
@@ -100,12 +95,6 @@ export default function Authors() {
           "This author cannot be deleted because it is associated with one or more books."
         );
       } else if (
-        error?.response?.status === 403
-      ) {
-        setError(
-          "You do not have permission to delete authors."
-        );
-      } else if (
         error?.response?.status === 404
       ) {
         setError("Author was not found.");
@@ -166,9 +155,7 @@ export default function Authors() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer
-          component={Paper}
-        >
+        <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -219,7 +206,6 @@ export default function Authors() {
                     </TableCell>
 
                     <TableCell align="right">
-                      {/* USER + ADMIN */}
                       <IconButton
                         color="primary"
                         onClick={() =>
@@ -234,27 +220,21 @@ export default function Authors() {
                         <Edit />
                       </IconButton>
 
-                      {/* ADMIN ONLY */}
-                      {isAdmin && (
-                        <IconButton
-                          color="error"
-                          onClick={() =>
-                            handleDelete(author)
-                          }
-                          disabled={
-                            deleteLoading !== null
-                          }
-                        >
-                          {deleteLoading ===
-                          author.id ? (
-                            <CircularProgress
-                              size={24}
-                            />
-                          ) : (
-                            <Delete />
-                          )}
-                        </IconButton>
-                      )}
+                      <IconButton
+                        color="error"
+                        onClick={() =>
+                          handleDelete(author)
+                        }
+                        disabled={
+                          deleteLoading !== null
+                        }
+                      >
+                        {deleteLoading === author.id ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <Delete />
+                        )}
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))

@@ -30,14 +30,10 @@ import {
 import { getAuthors } from "../api/authorService";
 import { getGenres } from "../api/genreService";
 
-import { useAuth } from "../auth/AuthContext";
-
 const MAX_BOOKS = 2600;
 
 export default function Home() {
   const navigate = useNavigate();
-
-  const { isAuthenticated } = useAuth();
 
   const [books, setBooks] =
     useState<BookResponse[]>([]);
@@ -111,29 +107,6 @@ export default function Home() {
     );
 
     return data;
-  };
-
-  /**
-   * Loads the catalogs required by the search filters.
-   */
-  const loadCatalogs = async () => {
-    try {
-      const [
-        authorData,
-        genreData,
-      ] = await Promise.all([
-        getAuthors(),
-        getGenres(),
-      ]);
-
-      setAuthors(authorData);
-      setGenres(genreData);
-    } catch (err) {
-      console.error(err);
-      setError(
-        "Unable to load search filters."
-      );
-    }
   };
 
   /**
@@ -288,18 +261,17 @@ export default function Home() {
           </Typography>
         </Box>
 
-        {isAuthenticated &&
-          !libraryFull && (
-            <Button
-              variant="contained"
-              startIcon={<AddIcon />}
-              onClick={() =>
-                navigate("/books/new")
-              }
-            >
-              New Book
-            </Button>
-          )}
+        {!libraryFull && (
+          <Button
+            variant="contained"
+            startIcon={<AddIcon />}
+            onClick={() =>
+              navigate("/books/new")
+            }
+          >
+            New Book
+          </Button>
+        )}
       </Box>
 
       {libraryFull && (
@@ -361,16 +333,8 @@ export default function Home() {
         <BookTable
           books={books}
           onView={handleView}
-          onEdit={
-            isAuthenticated
-              ? handleEdit
-              : undefined
-          }
-          onDelete={
-            isAuthenticated
-              ? handleDeleteRequest
-              : undefined
-          }
+          onEdit={handleEdit}
+          onDelete={handleDeleteRequest}
         />
       )}
 

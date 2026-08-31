@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   Alert,
   Box,
@@ -30,14 +31,8 @@ import {
 
 import { Genre } from "../../models/Genre";
 
-import { useAuth } from "../../auth/AuthContext";
-
 export default function Genres() {
   const navigate = useNavigate();
-
-  const { role } = useAuth();
-
-  const isAdmin = role === "ADMIN";
 
   const [genres, setGenres] =
     useState<Genre[]>([]);
@@ -100,12 +95,6 @@ export default function Genres() {
           "This genre cannot be deleted because it is associated with one or more books."
         );
       } else if (
-        error?.response?.status === 403
-      ) {
-        setError(
-          "You do not have permission to delete genres."
-        );
-      } else if (
         error?.response?.status === 404
       ) {
         setError("Genre was not found.");
@@ -166,9 +155,7 @@ export default function Genres() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer
-          component={Paper}
-        >
+        <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -207,12 +194,10 @@ export default function Genres() {
                     </TableCell>
 
                     <TableCell>
-                      {genre.description ||
-                        "—"}
+                      {genre.description || "—"}
                     </TableCell>
 
                     <TableCell align="right">
-                      {/* USER + ADMIN */}
                       <IconButton
                         color="primary"
                         onClick={() =>
@@ -227,27 +212,21 @@ export default function Genres() {
                         <Edit />
                       </IconButton>
 
-                      {/* ADMIN ONLY */}
-                      {isAdmin && (
-                        <IconButton
-                          color="error"
-                          onClick={() =>
-                            handleDelete(genre)
-                          }
-                          disabled={
-                            deleteLoading !== null
-                          }
-                        >
-                          {deleteLoading ===
-                          genre.id ? (
-                            <CircularProgress
-                              size={24}
-                            />
-                          ) : (
-                            <Delete />
-                          )}
-                        </IconButton>
-                      )}
+                      <IconButton
+                        color="error"
+                        onClick={() =>
+                          handleDelete(genre)
+                        }
+                        disabled={
+                          deleteLoading !== null
+                        }
+                      >
+                        {deleteLoading === genre.id ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <Delete />
+                        )}
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 ))

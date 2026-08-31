@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   Alert,
   Box,
@@ -30,14 +31,8 @@ import {
 
 import { Publisher } from "../../models/Publisher";
 
-import { useAuth } from "../../auth/AuthContext";
-
 export default function Publishers() {
   const navigate = useNavigate();
-
-  const { role } = useAuth();
-
-  const isAdmin = role === "ADMIN";
 
   const [publishers, setPublishers] =
     useState<Publisher[]>([]);
@@ -87,9 +82,7 @@ export default function Publishers() {
       setDeleteLoading(publisher.id);
       setError(null);
 
-      await deletePublisher(
-        publisher.id
-      );
+      await deletePublisher(publisher.id);
 
       setPublishers((previous) =>
         previous.filter(
@@ -101,12 +94,6 @@ export default function Publishers() {
       if (error?.response?.status === 409) {
         setError(
           "This publisher cannot be deleted because it is associated with one or more books."
-        );
-      } else if (
-        error?.response?.status === 403
-      ) {
-        setError(
-          "You do not have permission to delete publishers."
         );
       } else if (
         error?.response?.status === 404
@@ -171,9 +158,7 @@ export default function Publishers() {
           <CircularProgress />
         </Box>
       ) : (
-        <TableContainer
-          component={Paper}
-        >
+        <TableContainer component={Paper}>
           <Table>
             <TableHead>
               <TableRow>
@@ -206,71 +191,56 @@ export default function Publishers() {
                   </TableCell>
                 </TableRow>
               ) : (
-                publishers.map(
-                  (publisher) => (
-                    <TableRow
-                      key={publisher.id}
-                      hover
-                    >
-                      <TableCell>
-                        {publisher.name}
-                      </TableCell>
+                publishers.map((publisher) => (
+                  <TableRow
+                    key={publisher.id}
+                    hover
+                  >
+                    <TableCell>
+                      {publisher.name}
+                    </TableCell>
 
-                      <TableCell>
-                        {publisher.country ||
-                          "—"}
-                      </TableCell>
+                    <TableCell>
+                      {publisher.country || "—"}
+                    </TableCell>
 
-                      <TableCell>
-                        {publisher.foundedYear ??
-                          "—"}
-                      </TableCell>
+                    <TableCell>
+                      {publisher.foundedYear ?? "—"}
+                    </TableCell>
 
-                      <TableCell align="right">
-                        {/* USER + ADMIN */}
-                        <IconButton
-                          color="primary"
-                          onClick={() =>
-                            navigate(
-                              `/publishers/edit/${publisher.id}`
-                            )
-                          }
-                          disabled={
-                            deleteLoading !==
-                            null
-                          }
-                        >
-                          <Edit />
-                        </IconButton>
+                    <TableCell align="right">
+                      <IconButton
+                        color="primary"
+                        onClick={() =>
+                          navigate(
+                            `/publishers/edit/${publisher.id}`
+                          )
+                        }
+                        disabled={
+                          deleteLoading !== null
+                        }
+                      >
+                        <Edit />
+                      </IconButton>
 
-                        {/* ADMIN ONLY */}
-                        {isAdmin && (
-                          <IconButton
-                            color="error"
-                            onClick={() =>
-                              handleDelete(
-                                publisher
-                              )
-                            }
-                            disabled={
-                              deleteLoading !==
-                              null
-                            }
-                          >
-                            {deleteLoading ===
-                            publisher.id ? (
-                              <CircularProgress
-                                size={24}
-                              />
-                            ) : (
-                              <Delete />
-                            )}
-                          </IconButton>
+                      <IconButton
+                        color="error"
+                        onClick={() =>
+                          handleDelete(publisher)
+                        }
+                        disabled={
+                          deleteLoading !== null
+                        }
+                      >
+                        {deleteLoading === publisher.id ? (
+                          <CircularProgress size={24} />
+                        ) : (
+                          <Delete />
                         )}
-                      </TableCell>
-                    </TableRow>
-                  )
-                )
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                ))
               )}
             </TableBody>
           </Table>

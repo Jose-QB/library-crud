@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import {
   Alert,
   Box,
@@ -25,13 +26,9 @@ import {
 
 import { getBook } from "../api/bookService";
 
-import { useAuth } from "../auth/AuthContext";
-
 export default function BookDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  const { isAuthenticated } = useAuth();
 
   const [book, setBook] =
     useState<BookDetailResponse | null>(null);
@@ -104,17 +101,15 @@ export default function BookDetail() {
           Back
         </Button>
 
-        {isAuthenticated && (
-          <Button
-            variant="contained"
-            startIcon={<EditIcon />}
-            onClick={() =>
-              navigate(`/books/edit/${book.id}`)
-            }
-          >
-            Edit
-          </Button>
-        )}
+        <Button
+          variant="contained"
+          startIcon={<EditIcon />}
+          onClick={() =>
+            navigate(`/books/edit/${book.id}`)
+          }
+        >
+          Edit
+        </Button>
       </Box>
 
       <Paper sx={{ p: { xs: 2, md: 4 } }}>
